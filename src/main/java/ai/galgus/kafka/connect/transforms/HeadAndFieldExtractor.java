@@ -66,7 +66,7 @@ public class HeadAndFieldExtractor<R extends ConnectRecord<R>> implements Transf
     Map<String, Object> valueMap = (Map<String, Object>)originalRecord.value();
 
     // If record value doesn't contain the field to use as header or the field to extract then return original record
-    if (!valueMap.containsKey(headerField) || valueMap.containsKey(extratedField))
+    if (!valueMap.containsKey(headerField) || !valueMap.containsKey(extratedField))
       return originalRecord;
 
     Object valueFieldContent = valueMap.remove(headerField);
