@@ -4,7 +4,7 @@ on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:
-    - 'v*'
+    - '\d+\.\d+\.\d+'
 
 name: Create Release and upload Release Asset
 
@@ -44,6 +44,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./target/kafka-connect-transforms-${{ github.ref_name }}.jar
-          asset_name: kafka-connect-rabbitmq-${{ github.ref_name }}.jar
+          asset_path: ./target/kafka-connect-galgus-transforms-${{ github.ref_name }}.jar
+          asset_name: kafka-connect-galgus-transforms-${{ github.ref_name }}.jar
           asset_content_type: application/jar
