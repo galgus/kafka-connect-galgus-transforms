@@ -1,0 +1,25 @@
+name: Sync latest release to S3
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download latest release
+      uses: robinraju/release-downloader@v1.8
+      with:
+        latest: true
+        zipBall: true
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4.0.1
+      with:
+        aws-secret-access-key: ${{ secrets.MSK_S3_SECRET_KEY }}
+        aws-access-key-id: ${{ secrets.MSK_S3_ACCESS_KEY }}
+        aws-region: eu-north-1
+
+    - name: Sync to S3
+      run: aws s3 cp ./*.jar s3://${{ secrets.MSK_S3_ID }}
+
